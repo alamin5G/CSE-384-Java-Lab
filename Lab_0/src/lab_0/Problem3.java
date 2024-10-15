@@ -19,7 +19,7 @@ public class Problem3 {
         
         String thirdName = input.next();
         
-        System.out.println("Hi " + firstName + ", " + secondName + ", and " + thirdName + ".");
+        System.out.println("Hi " +thirdName  + ", " + secondName + ", and " + firstName + ".");
                 
     }
 }
