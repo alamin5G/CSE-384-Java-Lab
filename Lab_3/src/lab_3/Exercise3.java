@@ -57,7 +57,7 @@ public class Exercise3 {
         System.out.println("intString (toString): " + intString);
         System.out.println("doubleString (toString): " + doubleString);
         System.out.println("charString (toString): " + charString);
-        System.out.println("boolString (toString): " + 
+        System.out.println("boolString (toString): " + boolString);
         
     }
     
