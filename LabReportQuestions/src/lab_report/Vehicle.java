@@ -1,4 +1,3 @@
-
 package lab_report;
 
 /**
@@ -6,7 +5,7 @@ package lab_report;
  * @author alami
  */
 public class Vehicle {
-    
+
     //properties
     private final String brand;
     private final String model;
@@ -18,8 +17,8 @@ public class Vehicle {
     private String engine;
     private String fuelType;
     private int seatingCapacity;
-    
-    Vehicle(String brand, String model, String year,String type){
+
+    Vehicle(String brand, String model, String year, String type) {
         this.brand = brand;
         this.model = model;
         this.year = year;
@@ -31,39 +30,39 @@ public class Vehicle {
         this.fuelType = "petrol";
         this.seatingCapacity = 2;
     }
-    
-    public void setTyre(int tyre){
+
+    public void setTyre(int tyre) {
         this.tyre = tyre;
     }
-    
-    public int getTyre(){
+
+    public int getTyre() {
         return this.tyre;
     }
-    
-    public void setColor(String color){
+
+    public void setColor(String color) {
         this.color = color;
     }
-    
-    public String getColor(){
+
+    public String getColor() {
         return this.color;
     }
-    
-    public void setMilagePerLiter(int milagePerLiter){
+
+    public void setMilagePerLiter(int milagePerLiter) {
         this.milagePerLiter = milagePerLiter;
     }
-    
-    public int getMilagePerLiter(){
+
+    public int getMilagePerLiter() {
         return milagePerLiter;
     }
-    
-    public void setEngine(String engine){
+
+    public void setEngine(String engine) {
         this.engine = engine;
     }
-    
-    public String getEngine(){
+
+    public String getEngine() {
         return this.engine;
     }
-    
+
     public String getFuelType() {
         return fuelType;
     }
@@ -79,7 +78,7 @@ public class Vehicle {
     public void setSeatingCapacity(int seatingCapacity) {
         this.seatingCapacity = seatingCapacity;
     }
-    
+
     // functionalities
     public void startVehicle() {
         System.out.println("The vehicle is starting.");
@@ -93,17 +92,18 @@ public class Vehicle {
         System.out.println("The vehicle has stopped.");
     }
 
-    public void displayVehicleInfo() {
-        System.out.println("Brand: " + brand);
-        System.out.println("Model: " + model);
-        System.out.println("Year: " + year);
-        System.out.println("Type: " + type);
-        System.out.println("Color: " + color);
-        System.out.println("Tyre: " + tyre);
-        System.out.println("Milage Per Liter: " + milagePerLiter);
-        System.out.println("Engine: " + engine);
-        System.out.println("Fuel Type: " + fuelType);
-        System.out.println("Seating Capacity: " + seatingCapacity);
+    @Override
+    public String toString() {
+        return "Brand: " + brand + "\n"
+                + "Model: " + model + "\n"
+                + "Year: " + year + "\n"
+                + "Type: " + type + "\n"
+                + "Color: " + color + "\n"
+                + "Tyre: " + tyre + "\n"
+                + "Milage Per Liter: " + milagePerLiter + "\n"
+                + "Engine: " + engine + "\n"
+                + "Fuel Type: " + fuelType + "\n"
+                + "Seating Capacity: " + seatingCapacity;
     }
 
 }
