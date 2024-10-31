@@ -53,27 +53,26 @@ public class Customer extends User {
     public void setShippingInfo(String shippingInfo) {
         this.shippingInfo = shippingInfo;
     }
-    
-    //register
 
+    //register
     public void register(String userId, String password) {
         super.setUserId(userId);
         super.setPassword(password);
         super.setLoginStatus("activate");
     }
-    
+
     //login
-    public void login(String userId, String password){
+    public void login(String userId, String password) {
         boolean success = verifyLogin(userId, password);
-        
-        if(!success){
+
+        if (!success) {
             System.out.println("Login Failed");
-        }else{
-            System.out.println("Logn Success");
+        } else {
+            System.out.println("Login Success");
         }
     }
-    
-    public void updateProfile(){
+
+    public void updateProfile() {
         System.out.println("Which information you want to update? "
                 + "\n1. For Your Name"
                 + "\n2. For Address"
@@ -83,21 +82,46 @@ public class Customer extends User {
         Scanner input = new Scanner(System.in);
         int choice = input.nextInt();
         boolean flag = false;
-        switch(choice){
-            
-            case 1:  this.setCustomerName(customerName); flag = true; break;
-            case 2:  this.setAddress(address); flag = true; break;
-            case 3:  this.setEmail(email); flag = true; break;
-            case 4:  this.setCreditCardInfo(creditCardInfo); flag = true; break;
-            case 5:  this.setShippingInfo(shippingInfo); flag = true; break;
+        input.nextLine();
+        switch (choice) {
+            case 1:
+                System.out.print("Enter Name: ");
+                customerName = input.nextLine();
+                this.setCustomerName(customerName);
+                flag = true;
+                break;
+            case 2:
+                System.out.print("Enter Address: ");
+                address = input.nextLine();
+                this.setAddress(address);
+                flag = true;
+                break;
+            case 3:
+                 System.out.print("Enter Email: ");
+                email = input.nextLine();
+                this.setEmail(email);
+                flag = true;
+                break;
+            case 4:
+                 System.out.print("Enter Credit Card Infor: ");
+                creditCardInfo = input.nextLine();
+                this.setCreditCardInfo(creditCardInfo);
+                flag = true;
+                break;
+            case 5:
+                System.out.print("Enter Shipping Infor: ");
+                shippingInfo = input.nextLine();
+                this.setShippingInfo(shippingInfo);
+                flag = true;
+                break;
             default:
                 System.out.println("You weren't entering the right choice...");
         }
-        
-        if(flag){
+
+        if (flag) {
             System.out.println("Profile updated succcesfully!");
         }
-       
+
     }
 
 }

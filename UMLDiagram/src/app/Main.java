@@ -25,17 +25,20 @@ public class Main {
 
         System.out.println("\nLogging in...");
         customer.login("customer", "password123"); //wrong user
+        System.out.println("After correct user..");
         customer.login("customer1", "password123"); //correct user
 
         // Step 2: Create a shopping cart and add items
         ShoppingCart cart = new ShoppingCart();
         System.out.println("\nAdding items to cart...");
-        cart.addCartItem(101, 2, 20231030); // Product ID: 101, Quantity: 2, Date: 20231030
-        cart.addCartItem(102, 1, 20231030); // Product ID: 102, Quantity: 1, Date: 20231030
-        cart.addCartItem(103, 5, 20231030); // Product ID: 103, Quantity: 5, Date: 20231030
+        cart.addCartItem(101, 2, 231024); // Product ID: 101, Quantity: 2, Date: 20231030
+        cart.addCartItem(102, 1, 231024); // Product ID: 102, Quantity: 1, Date: 20231030
+        cart.addCartItem(103, 5, 231024); // Product ID: 103, Quantity: 5, Date: 20231030
+        System.out.println("\nView Cart Details: ");
         cart.viewCartDetails();
         
         //update the quantity from cart
+        System.out.println("update the quantity for 102 product id");
         cart.updateQuantity(102, 3);
         cart.viewCartDetails();
 
@@ -45,24 +48,26 @@ public class Main {
         // Step 4: Place an order using the cart and shipping info
         Orders order = new Orders("2023-10-30", String.valueOf(shippingInfo.getShippingId())); // Order date: 2023-10-30
         System.out.println("\nPlacing an order...");
-        order.placeOrder(cart, shippingInfo);
+        order.placeOrder(cart, shippingInfo); //missing customer information due to the UML diagram restriction
 
         // Step 5: View order details after placing the order
         System.out.println("\nOrder details:");
         order.viewOrderDetails();
+        
+        // Step 6: Check if the cart is empty after checkout
+        System.out.println("\nViewing cart after checkout:");
+        cart.viewCartDetails();
 
-        // Step 6: Update shipping information (e.g., when the item is shipped)
+        // Step 7: Update shipping information (e.g., when the item is shipped)
         System.out.println("\nUpdating shipping information...");
         order.setShippingInfo("2023-11-01", "Shipped");
         order.viewOrderDetails();
 
-        // Step 7: Update customer profile
+        // Step 8: Update customer profile
         System.out.println("\nUpdating customer profile...");
         customer.updateProfile();
 
-        // Step 8: Check if the cart is empty after checkout
-        System.out.println("\nViewing cart after checkout:");
-        cart.viewCartDetails();
+        
     }
 }
 

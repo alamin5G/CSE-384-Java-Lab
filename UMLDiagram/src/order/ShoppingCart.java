@@ -13,7 +13,7 @@ public class ShoppingCart extends Customer {
     private static int cartId = 0;
     private int productId;
     private int quantity;
-    private int dateAded;
+    private int dateAdded;
 
     private List<CartItem> cartItemList;
 
@@ -23,17 +23,20 @@ public class ShoppingCart extends Customer {
     }
 
     public void addCartItem(int productId, int quantity, int dateAdded) {
-        cartItemList.add(new CartItem(productId, quantity, dateAded));
+        cartItemList.add(new CartItem(productId, quantity, dateAdded));
         System.out.println("Item added to cart: Product ID - " + productId + ", Quantity - " + quantity + " , Date: " + dateAdded);
     }
 
     public void updateQuantity(int productId, int newQuantiy) {
+        boolean b = false;
         for (CartItem item : cartItemList) {
             if (item.productId == productId) {
                 item.quantity = newQuantiy;
-            } else {
-                System.out.println("Product Id was wrong!");
+                b = true;
             }
+        }
+        if(!b){
+            System.out.println("Product ID not found");
         }
     }
 
@@ -42,6 +45,7 @@ public class ShoppingCart extends Customer {
         for (CartItem item : cartItemList) {
             System.out.println("Product ID: " + item.productId + ", Quantity: " + item.quantity + ", Date Added: " + item.dateAdded);
         }
+        System.out.println("");
     }
 
     public void checkOut() {
@@ -119,12 +123,12 @@ public class ShoppingCart extends Customer {
         this.quantity = quantity;
     }
 
-    public int getDateAded() {
-        return dateAded;
+    public int getDateAdded() {
+        return dateAdded;
     }
 
-    public void setDateAded(int dateAded) {
-        this.dateAded = dateAded;
+    public void setDateAdded(int dateAdded) {
+        this.dateAdded = dateAdded;
     }
 
     public List<CartItem> getCartItemList() {

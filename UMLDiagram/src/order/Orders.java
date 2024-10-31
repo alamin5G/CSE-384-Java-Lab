@@ -34,7 +34,7 @@ public class Orders extends Customer {
         // Check out items from cart and add them to the order details
         System.out.println("Placing order with Cart ID: " + ShoppingCart.getCartId());
         for (ShoppingCart.CartItem item : cart.getCartItemList()) {
-            OrderDetails orderDetail = new OrderDetails(orderId, item.getProductId(), item.getQuantity(), item.getQuantity() * 10); // Assuming unitCost = 10
+            OrderDetails orderDetail = new OrderDetails(orderId, item.getProductId(), item.getQuantity(), 10); // Assuming unitCost = 10
             orderDetailsList.add(orderDetail);
         }
         cart.checkOut(); // invoking checkout method
