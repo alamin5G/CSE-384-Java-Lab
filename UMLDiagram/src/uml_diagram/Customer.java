@@ -73,7 +73,7 @@ public class Customer extends User {
         }
     }
     
-    public void updateProfile(String customerName, String address, String email, String creditCardInfo, String shippingInfo){
+    public void updateProfile(){
         System.out.println("Which information you want to update? "
                 + "\n1. For Your Name"
                 + "\n2. For Address"

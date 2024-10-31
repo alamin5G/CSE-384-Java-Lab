@@ -27,7 +27,7 @@ public class ShoppingCart extends Customer {
         System.out.println("Item added to cart: Product ID - " + productId + ", Quantity - " + quantity + " , Date: " + dateAdded);
     }
 
-    public void updateQuantity(int cartId, int productId, int newQuantiy) {
+    public void updateQuantity(int productId, int newQuantiy) {
         for (CartItem item : cartItemList) {
             if (item.productId == productId) {
                 item.quantity = newQuantiy;
