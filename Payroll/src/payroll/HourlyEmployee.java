@@ -18,11 +18,11 @@ public class HourlyEmployee extends Employee {
 
     @Override
     public double earningAmount() {
-        return wage * hours + getAmount();
+        return wage * hours + super.earningAmount();
     }
 
     @Override
     public String toString() {
-        return "Hourly Employee: " + getFirstName() + " " + getLastName() + ", SSN: " + getSocialSecurityNumber() + ", Salary: " + earningAmount();
+        return "Hourly Employee: " + super.toString();
     }
 }

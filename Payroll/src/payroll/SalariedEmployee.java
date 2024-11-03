@@ -16,11 +16,11 @@ public class SalariedEmployee extends Employee {
 
     @Override
     public double earningAmount() {
-        return weeklySalary * 4 +;
+        return weeklySalary * 4 + super.earningAmount();
     }
 
     @Override
     public String toString() {
-        return "Salaried Employee: " + getFirstName() + " " + getLastName() + ", SSN: " + getSocialSecurityNumber() + ", Salary: " + earningAmount();
+        return "Salaried Employee: " + super.toString() ;
     }
 }
