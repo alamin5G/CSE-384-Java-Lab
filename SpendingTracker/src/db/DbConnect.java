@@ -8,6 +8,7 @@ public class DbConnect {
         try{
             c=DriverManager.getConnection(
       "jdbc:mysql://localhost:3306/spendingTracker"+"?useSSL=false",
+                                  
                  "root", "252646");
             st=c.createStatement();
         }catch(SQLException ex){
