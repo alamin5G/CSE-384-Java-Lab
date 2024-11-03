@@ -10,7 +10,7 @@ public class DbConnect {
       "jdbc:mysql://localhost:3306/spnedingTracker"+"?useSSL=false",
                  "root", "252646");
             st=c.createStatement();
-        }catch(Exception ex){
+        }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, ex);
         }
     }
