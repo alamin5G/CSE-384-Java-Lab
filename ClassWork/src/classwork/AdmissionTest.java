@@ -23,12 +23,11 @@ public class AdmissionTest {
         int physicsMarks = scanner.nextInt();
 
         try {
-            // Check if total marks are less than 40
             if (totalMarks < 40) {
                 throw new ArithmeticException("Student did not qualify the admission test.");
             } else {
-                // Check individual subject marks and ensure no unanswered questions
-                if (mathMarks >= 20 && physicsMarks >= 20 && mathMarks != 0 && physicsMarks != 0 && mathMarks != -1 && physicsMarks != -1) {
+                
+                if (mathMarks >= 20 && physicsMarks >= 20 && mathMarks != 0 && physicsMarks != 0 && mathMarks != -1 && physicsMarks != -1) { //assuming -1 means unanswered questions
                     System.out.println("Student qualifies for CSE department.");
                 } else {
                     System.out.println("Student does not qualify for CSE department.");

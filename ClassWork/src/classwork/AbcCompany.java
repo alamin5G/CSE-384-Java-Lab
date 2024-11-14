@@ -5,7 +5,7 @@ package classwork;
  *
  * @author alami
  */
-// Base class for Employee
+
 abstract class Employee {
     protected String name;
     protected int id;
@@ -15,7 +15,6 @@ abstract class Employee {
         this.id = id;
     }
 
-    // Abstract method to calculate salary
     public abstract double calculateSalary();
     
     public String getName() {
@@ -27,7 +26,6 @@ abstract class Employee {
     }
 }
 
-// Manager class that extends Employee
 class Manager extends Employee {
     private final double baseSalary;
     private final double bonus;
@@ -44,7 +42,7 @@ class Manager extends Employee {
     }
 }
 
-// Programmer class that extends Employee
+
 class Programmer extends Employee {
     private final double baseSalary;
     private final double overtimePay;
