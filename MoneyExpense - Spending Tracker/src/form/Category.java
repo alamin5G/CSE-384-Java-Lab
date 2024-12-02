@@ -4,6 +4,7 @@
  */
 package form;
 
+import db.DatabaseConnection;
 import javax.swing.JOptionPane;
 import java.sql.*;
 
@@ -26,12 +27,11 @@ public class Category extends javax.swing.JFrame {
             
             javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();
             int i = tableModel.getRowCount();
-            while(i--!= 0){
+            while(i-- != 0){
                 tableModel.removeRow(i);
             }
-          Connection c =  DriverManager.getConnection("jdbc:mysql://localhost:3306/spendingtracker", "root", "252646");
-          Statement st = c.createStatement();
-          ResultSet r = st.executeQuery("select * from category_info");
+          
+          ResultSet r = DatabaseConnection.statement.executeQuery("select * from category_info");
           
           int sl = 0;
           while(r.next()){
@@ -132,6 +132,11 @@ public class Category extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Cylincilo", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Delete");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -189,13 +194,17 @@ public class Category extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             String categoryName = jTextField1.getText();
-            Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/spendingtracker", "root" , "252646");
-            
-            Statement st = c.createStatement();
-            st.executeUpdate("insert into category_info values('"+categoryName +"')");
+            if (categoryName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter a valide Category!");
+            }else{
+                DatabaseConnection.statement.executeUpdate("insert into category_info values('"+categoryName +"')");
             
             JOptionPane.showMessageDialog(null, "Category Added Successfully");
+            
+              //invoking get entries to update the data in the table
              getEntries();
+            }
+            
         }catch(SQLIntegrityConstraintViolationException ex){
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -204,6 +213,37 @@ public class Category extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_button2ActionPerformed
+
+    
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int rowIndex = jTable1.getSelectedRow();
+        String categoryName = (String) jTable1.getValueAt(rowIndex, 1);
+        
+        int result = JOptionPane.showConfirmDialog(null, "Are you sure?", "Deletion of category '" + categoryName+ "' ", JOptionPane.YES_NO_OPTION);
+        
+        if(result == JOptionPane.YES_OPTION){
+            try{
+            
+           DatabaseConnection.statement.executeUpdate("delete from category_info where category = '"+categoryName +"'");
+            
+            JOptionPane.showMessageDialog(null, "Category Deleted Successfully");
+            
+            //invoking get entries to update the data in the table
+            getEntries();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        }else{
+            getEntries();
+            
+        }
+        
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
