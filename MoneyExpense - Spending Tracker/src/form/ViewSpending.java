@@ -4,6 +4,12 @@
  */
 package form;
 
+import javax.swing.table.*;
+import java.sql.*;
+import db.DatabaseConnection;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author alami
@@ -15,6 +21,24 @@ public class ViewSpending extends javax.swing.JFrame {
      */
     public ViewSpending() {
         initComponents();
+        jDateChooser1.setSelectableDateRange(null, new java.util.Date());
+        jDateChooser2.setSelectableDateRange(null, new java.util.Date());
+
+        jDateChooser3.setSelectableDateRange(null, new java.util.Date());
+        jDateChooser4.setSelectableDateRange(null, new java.util.Date());
+        displayCategory();
+    }
+
+    private void displayCategory() {
+        try {
+            ResultSet rs = DatabaseConnection.statement.executeQuery(
+                    "select * from category_info");
+            while (rs.next()) {
+                jComboBox1.addItem(rs.getString("category"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }
 
     /**
@@ -264,7 +288,7 @@ public class ViewSpending extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(label4, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, 232, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -294,6 +318,11 @@ public class ViewSpending extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(238, 238, 238));
         jButton2.setText("Search");
         jButton2.setIconTextGap(5);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         label11.setFont(new java.awt.Font("Felix Titling", 1, 14)); // NOI18N
         label11.setForeground(new java.awt.Color(238, 238, 238));
@@ -383,7 +412,60 @@ public class ViewSpending extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+            int rowCount = dtm.getRowCount();
+            while (rowCount-- != 0) {
+                dtm.removeRow(0);
+            }
+            Date dt1 = new Date(jDateChooser1.getDate().getTime());
+            Date dt2 = new Date(jDateChooser2.getDate().getTime());
+            ResultSet resultSet = DatabaseConnection.statement.executeQuery(
+                    "select * from spendings where sdate>='"
+                    + dt1 + "' and sdate<='" + dt2 + "' order by sdate asc");
+            int total = 0;
+            while (resultSet.next()) {
+                int t = resultSet.getInt("amount");
+                total += t;
+                Object o[] = {resultSet.getDate("sdate"),
+                    resultSet.getString("category"), t};
+                dtm.addRow(o);
+            }
+            label7.setText(total + "");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+            int rc = dtm.getRowCount();
+            while (rc-- != 0) {
+                dtm.removeRow(0);
+            }
+            String c = (String) jComboBox1.getSelectedItem();
+            Date dt1 = new Date(
+                    jDateChooser3.getDate().getTime());
+            Date dt2 = new Date(
+                    jDateChooser4.getDate().getTime());
+            ResultSet rs = DatabaseConnection.statement.executeQuery(
+                    "select * from spendings where sdate>='"
+                    + dt1 + "' and sdate<='" + dt2 + "' and category='"
+                    + c + "' order by sdate asc");
+            int total = 0;
+            while (rs.next()) {
+                int t = rs.getInt("amount");
+                total += t;
+                Object o[] = {rs.getDate("sdate"),
+                    rs.getString("category"), t};
+                dtm.addRow(o);
+            }
+            label9.setText(total + "");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
