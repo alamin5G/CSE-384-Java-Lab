@@ -103,7 +103,7 @@ class Computers extends ElectronicsEquipment{
     
      @Override
     public String display_product_information() {
-    return "Computers information: " + "manufacturerName=" + getManufacturerName() + ", cost=" + getCost() + ", weight=" + getWeight() + ", powerRating=" + getPowerRating() + ", isTurnedOn=" + isIsTurnedOn();
+    return "Computers information: " + "manufacturerName=" + super.getManufacturerName() + ", cost=" + super.getCost() + ", weight=" + super.getWeight() + ", powerRating=" + super.getPowerRating() + ", isTurnedOn=" + super.isIsTurnedOn();
     }
 
     @Override
@@ -147,7 +147,7 @@ class CellPhone extends ElectronicsEquipment{
     
       @Override
     public String display_product_information() {
-    return "Cell Phone information: " + "manufacturerName=" + getManufacturerName() + ", cost=" + getCost() + ", weight=" + getWeight() + ", powerRating=" + getPowerRating() + ", isTurnedOn=" + isIsTurnedOn();
+    return "Cell Phone information: " + "manufacturerName=" + super.getManufacturerName() + ", cost=" + super.getCost() + ", weight=" + super.getWeight() + ", powerRating=" + super.getPowerRating() + ", isTurnedOn=" + super.isIsTurnedOn();
     }
     
 }
@@ -179,7 +179,7 @@ class DigitalCamera extends ElectronicsEquipment{
     
       @Override
     public String display_product_information() {
-    return "Cell Phone information: " + "manufacturerName=" + super.getManufacturerName() + ", cost=" + super.getCost() + ", weight=" + super.getWeight() + "grams, powerRating=" + super.getPowerRating() + "Watt, isTurnedOn=" + super.isIsTurnedOn();
+    return "Camera information: " + "manufacturerName=" + super.getManufacturerName() + ", cost=" + super.getCost() + ", weight=" + super.getWeight() + "grams, powerRating=" + super.getPowerRating() + "Watt, isTurnedOn=" + super.isIsTurnedOn();
     }
     
 }
@@ -190,8 +190,9 @@ public class Equipments {
         
         try{
             Computers computer = new Computers("HP", 50000, 2000, "150", true);
+            
             computer.isWorking();
-            computer.display_product_information();
+            System.out.println("" + computer.display_product_information());
            
             
         }catch(TypeNotPresentException e){
@@ -199,7 +200,7 @@ public class Equipments {
         }catch(Exception e){
             System.out.println("" + e.getMessage());
         }finally{
-            System.out.println("Executed the full program.");
+            System.out.println("computer Executed the full program.");
         }
         
          
@@ -207,7 +208,7 @@ public class Equipments {
         try{
            CellPhone cellPhone = new CellPhone("Samsung", 0, 200, "25", false);
             cellPhone.isWorking();
-            cellPhone.display_product_information();
+            System.out.println("" + cellPhone.display_product_information());
            
             
         }catch(TypeNotPresentException e){
@@ -223,7 +224,7 @@ public class Equipments {
          try{
             DigitalCamera camera = new DigitalCamera("Canon", 100000, 800, "15", true);
             camera.isWorking();
-            camera.display_product_information();           
+            System.out.println("" + camera.display_product_information());
             
         }catch(TypeNotPresentException e){
             System.out.println("" + e.getMessage());
