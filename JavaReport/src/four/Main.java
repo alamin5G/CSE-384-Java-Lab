@@ -77,7 +77,7 @@ public class Main {
         int[][] mat2 = {
             {7, 8},
             {9, 10},
-            {11, 12}
+            {10, 11}
         };
 
         // Set matrices in the object
