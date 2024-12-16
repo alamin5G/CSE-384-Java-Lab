@@ -40,19 +40,17 @@ public class Main {
         while (true) {
             System.out.print("\n1. Withdraw\n2. Check Balance\n3. Exit\nChoose: ");
             switch (sc.nextInt()) {
-                case 1:
+                case 1 -> {
                     System.out.print("Enter amount: ");
                     atm.withdraw(sc.nextDouble());
-                    break;
-                case 2:
-                    atm.checkBalance();
-                    break;
-                case 3:
+                }
+                case 2 -> atm.checkBalance();
+                case 3 -> {
                     System.out.println("Thank you. Goodbye!");
                     sc.close();
                     return;
-                default:
-                    System.out.println("Invalid choice. Try again.");
+                }
+                default -> System.out.println("Invalid choice. Try again.");
             }
         }
     }

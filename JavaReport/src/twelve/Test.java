@@ -18,22 +18,7 @@ class Animal {
         System.out.println("I walk on the street");
     }
 
-    // Getters and Setters (Part b)
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
+   
 }
 
 class Bird extends Animal {

@@ -1,3 +1,5 @@
+package nine;
+
 // Abstract class Employee
 abstract class Employee {
     protected String name;

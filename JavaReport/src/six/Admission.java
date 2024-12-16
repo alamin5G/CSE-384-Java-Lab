@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package six;
 
 /**
@@ -55,8 +52,6 @@ public class Admission {
             System.out.println("Error: " + e.getMessage());
         } catch (AdmissionTestException e) {
             System.out.println("Error: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("An unexpected error occurred: " + e.getMessage());
         } finally {
             sc.close();
         }

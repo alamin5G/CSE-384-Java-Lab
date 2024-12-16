@@ -9,20 +9,23 @@ package fourteen;
  * @author alami
  */
 public class SharedCounter {
-    // Shared counter
-    private static int counter = 0;
+
+    private static int counter = 0;  // Shared counter (not thread-safe)
 
     public static void main(String[] args) {
-        // Create an array to hold threads
         Thread[] threads = new Thread[10];
 
-        // Create 10 threads that increment the counter
+        // Create 10 threads
         for (int i = 0; i < 10; i++) {
             threads[i] = new Thread(() -> {
                 for (int j = 0; j < 10; j++) {
-                    int temp = counter; // Read the value of the counter
-                    Thread.yield();    // Encourage thread switch to create interference
-                    counter = temp + 1; // Increment and store
+                    incrementCounter();  // Increment the counter
+                    try {
+                        // Randomly yield or sleep to simulate thread scheduling issues
+                        Thread.sleep(0);  // Small sleep time to force context switching
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }
@@ -42,7 +45,11 @@ public class SharedCounter {
         }
 
         // Print the final value of the counter
-        System.out.println("Final Counter Value: " + counter);
+        System.out.println("Final value of counter: " + counter);
+    }
+
+    // Non-atomic increment method that may cause race conditions
+    private synchronized static void incrementCounter() {
+        counter++;  // Increment the counter
     }
 }
-
