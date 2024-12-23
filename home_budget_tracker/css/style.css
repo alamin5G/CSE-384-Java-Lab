@@ -1,0 +1,14 @@
+/* Ensure the title is always centered */
+.navbar {
+    position: relative;
+}
+.navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.navbar-nav {
+    margin-left: auto;
+}
