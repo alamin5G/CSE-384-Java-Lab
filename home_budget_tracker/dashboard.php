@@ -3,6 +3,10 @@ include 'includes/header.php';
 include 'includes/functions.php';
 include 'includes/db.php';
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -20,12 +24,12 @@ $sql = "SELECT COUNT(*) as total_categories FROM categories WHERE user_id = '$us
 $result = mysqli_query($conn, $sql);
 $total_categories = mysqli_fetch_assoc($result)['total_categories'] ?? 0;
 
-// Fetch top expense category with amount (user-specific)
+// Fetch top expense category with amount
 $sql = "SELECT categories.name, SUM(expenses.amount) as total 
         FROM expenses 
         JOIN categories ON expenses.category_id = categories.id 
         WHERE expenses.user_id = '$user_id' 
-        GROUP BY categories.name 
+        GROUP BY categories.id, categories.name 
         ORDER BY total DESC 
         LIMIT 1";
 $result = mysqli_query($conn, $sql);
@@ -33,13 +37,12 @@ $top_category_data = mysqli_fetch_assoc($result);
 $top_category = $top_category_data['name'] ?? 'None';
 $top_category_amount = $top_category_data['total'] ?? 0;
 
-
 // Fetch lowest expense category with amount
 $sql = "SELECT categories.name, SUM(expenses.amount) as total 
         FROM expenses 
         JOIN categories ON expenses.category_id = categories.id 
         WHERE expenses.user_id = '$user_id' 
-        GROUP BY categories.name 
+        GROUP BY categories.id, categories.name 
         ORDER BY total ASC 
         LIMIT 1";
 $result = mysqli_query($conn, $sql);
@@ -51,7 +54,7 @@ $lowest_category_amount = $lowest_category_data['total'] ?? 0;
 $sql = "SELECT MONTHNAME(expense_date) as month, SUM(amount) as total 
         FROM expenses 
         WHERE user_id = '$user_id' 
-        GROUP BY MONTH(expense_date) 
+        GROUP BY MONTH(expense_date), MONTHNAME(expense_date) 
         ORDER BY total DESC 
         LIMIT 1";
 $result = mysqli_query($conn, $sql);
@@ -63,7 +66,7 @@ $top_month_amount = $top_month_data['total'] ?? 0;
 $sql = "SELECT MONTHNAME(expense_date) as month, SUM(amount) as total 
         FROM expenses 
         WHERE user_id = '$user_id' 
-        GROUP BY MONTH(expense_date) 
+        GROUP BY MONTH(expense_date), MONTHNAME(expense_date) 
         ORDER BY total ASC 
         LIMIT 1";
 $result = mysqli_query($conn, $sql);

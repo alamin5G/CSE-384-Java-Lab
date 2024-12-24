@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 23, 2024 at 07:45 PM
--- Server version: 9.1.0
+-- Generation Time: Dec 24, 2024 at 08:57 AM
+-- Server version: 8.3.0
 -- PHP Version: 8.3.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -17,9 +17,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+
 --
 -- Database: `leaderboard`
 --
+CREATE DATABASE IF NOT EXISTS `leaderboard` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `leaderboard`;
 
 -- --------------------------------------------------------
 
@@ -38,14 +41,23 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `correct_option` int NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `questions`
 --
 
 INSERT INTO `questions` (`id`, `question`, `option1`, `option2`, `option3`, `option4`, `correct_option`, `created_at`) VALUES
-(1, 'what is my name?', 'Alaminn', 'Rakib', 'Alamin', 'Md. Alamina', 3, '2024-12-23 18:49:00');
+(3, 'What date is the Victory Day of Bangladesh?', '21 December', '26 December', '26 March', '16 December', 4, '2024-12-24 05:37:09'),
+(4, 'বাংলাদেশের রাজধানীর নাম কি?', 'ঢাকা', 'গাজীপুর', 'চট্টগ্রাম', 'নারায়ণগঞ্জ', 1, '2024-12-24 05:39:54'),
+(5, 'বাংলাদেশের প্রথম পালিয়ে যাওয়া প্রধানমন্ত্রীর নাম কী?', 'শেখ হাসিনা', 'খালেদা জিয়া', 'ড. মুহাম্মদ ইউনুস', 'তারেক জিয়া', 1, '2024-12-24 05:41:39'),
+(6, 'Which color is liked by Sakib Al Hasan?', 'Red', 'Blue', 'Yellow', 'Purple', 4, '2024-12-24 06:22:44'),
+(7, 'Why did Sakib Al Hasan join in Politics?', 'For more fame', 'For money', 'For  family pressure', 'For nothing', 2, '2024-12-24 06:26:14'),
+(8, 'In what kind of game a person needs to use his leg?', 'cricket', 'hockey', 'tennis', 'Football', 4, '2024-12-24 06:28:05'),
+(9, 'In which year Argentina did win their 2nd world cup?', '1996', '2000', '2022', '1968', 3, '2024-12-24 06:30:38'),
+(10, 'How many World Cup does Brazil have?', '4', '3', '5', '9', 3, '2024-12-24 06:31:51'),
+(11, 'In which year France did win FIFA world cup?', '2012', '2018', '1996', '2008', 2, '2024-12-24 06:33:41'),
+(12, 'What are the technologies used in this project?', 'php, mysql', 'java, javascript, mysql', 'dot net', 'Other', 1, '2024-12-24 06:37:19');
 
 -- --------------------------------------------------------
 
@@ -61,21 +73,18 @@ CREATE TABLE IF NOT EXISTS `scores` (
   `played_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `scores`
 --
 
 INSERT INTO `scores` (`id`, `user_id`, `score`, `played_at`) VALUES
-(1, 1, 1, '2024-12-23 19:06:42'),
-(2, 1, 1, '2024-12-23 19:07:04'),
-(3, 1, 0, '2024-12-23 19:07:16'),
-(4, 1, 1, '2024-12-23 19:13:49'),
-(5, 5, 1, '2024-12-23 19:44:20'),
-(6, 5, 1, '2024-12-23 19:44:33'),
-(7, 5, 1, '2024-12-23 19:44:40'),
-(8, 5, 1, '2024-12-23 19:44:49');
+(11, 6, 3, '2024-12-24 06:06:23'),
+(12, 6, 2, '2024-12-24 06:07:13'),
+(13, 6, 8, '2024-12-24 06:38:39'),
+(14, 8, 8, '2024-12-24 08:16:02'),
+(15, 8, 8, '2024-12-24 08:17:24');
 
 -- --------------------------------------------------------
 
@@ -97,18 +106,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `phone`, `is_admin`, `created_at`, `name`, `age`) VALUES
-(1, 'alamin', 'admin@admin.com', '$2y$10$TjcCHhMfxXBWhCWDmnldPePpADjTf6sAU29Q/Ucy0Ul294QaoZ5zq', '01822679672', 1, '2024-12-23 17:57:13', 'Md. Alamin', 22),
-(2, 'alaminvai', 'admin@store.com', '$2y$10$zNjAoLGpNajdL6Q6TrG0F.FfY1eXnts8i4nP/GbHKVKLrbelp9lVi', '01822679672', 0, '2024-12-23 18:00:16', 'Md. Alamin', 22),
-(3, 'rakib', 'ala@alamin.com', '$2y$10$HBgUj5WWAgeZPOjQ8tX6bupKMcKgjz0SGoVhw/zybXClWfiBJG.92', '01822679672', 0, '2024-12-23 18:01:04', 'Md. Alamin', 23),
-(4, 'rakibv', 'admin@stores.com', '$2y$10$bmscblNItVCz3XIdOjs1bOc6L1DJtOqWnI9WMO3WTHDw/kW8UUsay', '01822679672', 0, '2024-12-23 18:02:42', 'Md. Alamin', 22),
-(5, '21303136', 'admin@storse.com', '$2y$10$ocbZJ0A9hiGxxLAxH6CiXOmOYIStiyZYA/dOdsKBaKdxbqNSDRgNy', '01822679672', 0, '2024-12-23 18:08:59', 'Md. Alamin', 22);
+(8, 'admin', 'admin@admin.net', '$2y$10$HRZ0jsZWcZxM5/S69Yc16.q9ZIvxcHVhM85F3.fhnApOXpfhwkJ8S', '01823456789', 1, '2024-12-24 08:13:09', 'Admin User', 22),
+(6, 'rejauna', '123@123.com', '$2y$10$l9hpfTCEeEYyySPHcGZLX.TvHZNAxdX8FF31LHgg6RiA00L5PegWq', '01628154873', 1, '2024-12-24 06:05:27', 'Rejauna Islam', 18);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

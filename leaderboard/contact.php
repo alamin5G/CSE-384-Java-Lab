@@ -1,5 +1,5 @@
 <?php include 'header.php'; 
-    session_start();
+    
 ?>
 
 <h1>Contact Us</h1>

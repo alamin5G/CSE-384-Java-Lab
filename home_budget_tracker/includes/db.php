@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'home_budget_tracker';
 $username = 'root';
-$password = '';
+$password = '252646';
 
 // Create a connection using mysqli
 $conn = mysqli_connect($host, $username, $password, $dbname);
