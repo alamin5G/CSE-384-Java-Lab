@@ -76,7 +76,7 @@ public class Category extends javax.swing.JFrame {
         label1.setFont(new java.awt.Font("Felix Titling", 1, 24)); // NOI18N
         label1.setForeground(new java.awt.Color(238, 238, 238));
         label1.setName(""); // NOI18N
-        label1.setText("Add New Category");
+        label1.setText("Add New Categories");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

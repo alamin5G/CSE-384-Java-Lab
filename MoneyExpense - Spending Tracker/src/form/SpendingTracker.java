@@ -48,6 +48,7 @@ public class SpendingTracker extends javax.swing.JFrame {
         }
     }
 
+    //table data working process
     private void getEntries() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();

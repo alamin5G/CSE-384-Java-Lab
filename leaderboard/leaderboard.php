@@ -51,7 +51,7 @@ if (isset($_GET['search'])) {
         </form>
     </div>
     <div class="col-md-6 text-end">
-        <a href="?sort_by=total_score&order=desc" class="btn btn-sm btn-outline-primary me-1">Sort by Score ↓</a>
+        <a href="?sort_by=total_score&order=desc" class="btn btn-sm btn-outline-primary me-1">Sort by Scores ↓</a>
         <a href="?sort_by=total_score&order=asc" class="btn btn-sm btn-outline-success me-1">Sort by Score ↑</a>
         <a href="?sort_by=age&order=asc" class="btn btn-sm btn-outline-info me-1">Sort by Age ↑</a>
         <a href="?sort_by=age&order=desc" class="btn btn-sm btn-outline-warning">Sort by Age ↓</a>

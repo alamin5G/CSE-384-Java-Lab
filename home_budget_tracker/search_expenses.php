@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $filters = [];
 $results = [];
+$total_amount = 0;
 $limit = 20; // Number of results per page
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $limit;
@@ -23,36 +24,60 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $end_date = $_POST['end_date'];
 
     $sql = "SELECT expenses.*, categories.name as category_name 
-        FROM expenses 
-        JOIN categories ON expenses.category_id = categories.id
-        WHERE expenses.user_id = '$user_id'";
+            FROM expenses 
+            JOIN categories ON expenses.category_id = categories.id
+            WHERE expenses.user_id = ?";
+    $filters[] = $user_id;
+    $types = "i"; // Initial type for user_id
 
-if (!empty($category)) {
-    $sql .= " AND expenses.category_id = '$category'";
-}
-if (!empty($start_date) && !empty($end_date)) {
-    $sql .= " AND expenses.expense_date BETWEEN '$start_date' AND '$end_date'";
-}
+    if (!empty($category)) {
+        $sql .= " AND expenses.category_id = ?";
+        $filters[] = $category;
+        $types .= "i";
+    }
+    if (!empty($start_date) && !empty($end_date)) {
+        $sql .= " AND expenses.expense_date BETWEEN ? AND ?";
+        $filters[] = $start_date;
+        $filters[] = $end_date;
+        $types .= "ss";
+    }
 
+    $sql .= " ORDER BY expenses.expense_date DESC LIMIT ? OFFSET ?";
+    $filters[] = $limit;
+    $filters[] = $offset;
+    $types .= "ii";
 
-    $sql .= " ORDER BY expenses.expense_date DESC LIMIT $limit OFFSET $offset";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, $types, ...$filters);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
-    $result = mysqli_query($conn, $sql);
     if ($result) {
         $results = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        // Calculate total amount for filtered results
+        foreach ($results as $expense) {
+            $total_amount += $expense['amount'];
+        }
     }
 }
 
 // Fetch total expenses for pagination
-$count_sql = "SELECT COUNT(*) as total FROM expenses WHERE user_id = '$user_id'";
-$count_result = mysqli_query($conn, $count_sql);
+$count_sql = "SELECT COUNT(*) as total FROM expenses WHERE user_id = ?";
+$stmt = mysqli_prepare($conn, $count_sql);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$count_result = mysqli_stmt_get_result($stmt);
 $total_records = mysqli_fetch_assoc($count_result)['total'] ?? 0;
 $total_pages = ceil($total_records / $limit);
 
-// Fetch categories for dropdown
+// Fetch categories for dropdown (only user's categories)
 $categories = [];
-$sql = "SELECT * FROM categories";
-$result = mysqli_query($conn, $sql);
+$sql = "SELECT * FROM categories WHERE user_id = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 if ($result) {
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
@@ -84,6 +109,7 @@ if ($result) {
 
     <?php if (!empty($results)): ?>
         <h3 class="mt-4">Search Results</h3>
+        <p class="alert alert-info"><strong>Total Amount: $<?php echo number_format($total_amount, 2); ?></strong></p>
         <table class="table table-striped">
             <thead>
                 <tr>

@@ -2,7 +2,7 @@
 $host = 'localhost';
 $db = 'leaderboard';
 $user = 'root';
-$pass = '';
+$pass = '252646';
 $conn = mysqli_connect($host, $user, $pass, $db);
 
 if (!$conn) {

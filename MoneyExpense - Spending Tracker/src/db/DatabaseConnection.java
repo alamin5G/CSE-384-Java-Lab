@@ -18,6 +18,7 @@ public class DatabaseConnection {
     
     static{
         try {
+            // host location with dbname, username, password
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/spendingTracker", "root", "252646");
             statement = connection.createStatement();
         } catch (SQLException ex) {

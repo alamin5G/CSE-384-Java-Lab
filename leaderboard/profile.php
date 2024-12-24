@@ -62,6 +62,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = mysqli_fetch_assoc($result);
 }
 
+// Fallback for missing data
+if (!$user) {
+    $user = [
+        'username' => '',
+        'email' => '',
+        'phone' => '',
+        'name' => '',
+        'age' => '',
+    ];
+}
+
 // Determine if profile is in editable mode
 $is_editable = isset($_GET['edit']);
 ?>
@@ -79,31 +90,31 @@ $is_editable = isset($_GET['edit']);
             <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input type="text" name="username" class="form-control" 
-                    value="<?= htmlspecialchars($user['username']) ?>" 
+                    value="<?= htmlspecialchars($user['username'] ?? '') ?>" 
                     <?= $is_editable ? '' : 'readonly' ?> required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Email</label>
                 <input type="email" name="email" class="form-control" 
-                    value="<?= htmlspecialchars($user['email']) ?>" 
+                    value="<?= htmlspecialchars($user['email'] ?? '') ?>" 
                     <?= $is_editable ? '' : 'readonly' ?> required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Phone</label>
                 <input type="text" name="phone" class="form-control" 
-                    value="<?= htmlspecialchars($user['phone']) ?>" 
+                    value="<?= htmlspecialchars($user['phone'] ?? '') ?>" 
                     <?= $is_editable ? '' : 'readonly' ?>>
             </div>
             <div class="mb-3">
                 <label class="form-label">Name</label>
                 <input type="text" name="name" class="form-control" 
-                    value="<?= htmlspecialchars($user['name']) ?>" 
+                    value="<?= htmlspecialchars($user['name'] ?? '') ?>" 
                     <?= $is_editable ? '' : 'readonly' ?>>
             </div>
             <div class="mb-3">
                 <label class="form-label">Age</label>
                 <input type="number" name="age" class="form-control" 
-                    value="<?= htmlspecialchars($user['age']) ?>" 
+                    value="<?= htmlspecialchars($user['age'] ?? '') ?>" 
                     <?= $is_editable ? '' : 'readonly' ?>>
             </div>
             <?php if ($is_editable): ?>

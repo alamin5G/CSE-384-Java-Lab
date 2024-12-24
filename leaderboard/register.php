@@ -2,8 +2,6 @@
 include 'header.php';
 require 'db.php';
 
-session_start();
-
 $username = $email = $phone = $name = $age = ""; // Initialize variables
 $error = "";
 
@@ -16,47 +14,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    if (mysqli_num_rows($result) > 0) {
-        $conflicting_user = mysqli_fetch_assoc($result);
-        if ($conflicting_user['username'] === $username) {
-            $error_message = "The username '$username' is already taken by another user.";
-        } elseif ($conflicting_user['email'] === $email) {
-            $error_message = "The email '$email' is already associated with another account.";
+    // Check for duplicate username or email
+    $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE username = ? OR email = ?");
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "ss", $username, $email);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($result) > 0) {
+            $conflicting_user = mysqli_fetch_assoc($result);
+            if ($conflicting_user['username'] === $username) {
+                $error = "The username '$username' is already taken.";
+            } elseif ($conflicting_user['email'] === $email) {
+                $error = "The email '$email' is already associated with another account.";
+            }
         }
-    }
-    // Check if passwords match
-    if ($password !== $confirm_password) {
-        $error = "Passwords do not match!";
+        mysqli_stmt_close($stmt);
     } else {
-        // Hash the password
+        $error = "Database error: " . mysqli_error($conn);
+    }
+
+    // Check if passwords match
+    if (empty($error) && $password !== $confirm_password) {
+        $error = "Passwords do not match!";
+    }
+
+    // If no errors, proceed with registration
+    if (empty($error)) {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-        // Prepare the INSERT query
+        // Insert user into the database
         $stmt = mysqli_prepare($conn, "INSERT INTO users (username, email, password, phone, name, age) VALUES (?, ?, ?, ?, ?, ?)");
         if ($stmt) {
             mysqli_stmt_bind_param($stmt, "sssssi", $username, $email, $hashed_password, $phone, $name, $age);
 
-            try {
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_close($stmt);
-
+            if (mysqli_stmt_execute($stmt)) {
                 // Set success message in session
                 $_SESSION['success_message'] = "Registration successful! You can now log in.";
-
-                // Redirect to login page
                 header("Location: login.php");
                 exit();
-            } catch (Exception $e) {
-                $error = "Registration failed: " . $e->getMessage();
+            } else {
+                $error = "Registration failed: " . mysqli_stmt_error($stmt);
             }
+            mysqli_stmt_close($stmt);
         } else {
             $error = "Database error: " . mysqli_error($conn);
         }
     }
 }
 ?>
-
-
 
 <h1 class="mt-4 text-center">Register</h1>
 <div class="row">
