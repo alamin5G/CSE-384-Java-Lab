@@ -70,7 +70,7 @@ public class Main {
         Car myCar = new Car("John", 80, "right", true);
 
         // Create an opposite car
-        Car oppositeCar = new Car("Doe", 60, "left", false);
+        Car oppositeCar = new Car("Doe", 60, "left", true);
 
         // Safety system to monitor cars
         SafetySystem safetySystem = new SafetySystem();
