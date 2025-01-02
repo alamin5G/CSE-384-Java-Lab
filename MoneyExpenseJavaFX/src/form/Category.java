@@ -24,11 +24,14 @@ public class Category extends Application {
 
         categoryField = new TextField();
         categoryField.setPromptText("Enter New Category");
+        
 
         Button addCategoryButton = new Button("Add Category");
+           addCategoryButton.setStyle("-fx-font-weight: bold; -fx-text-fill:#ffffff; -fx-background-color: green ");
         addCategoryButton.setOnAction(e -> addCategory());
 
         Button deleteCategoryButton = new Button("Delete Selected");
+        deleteCategoryButton.setStyle("-fx-font-weight: bold; -fx-text-fill:#ffffff; -fx-background-color: red ");
         deleteCategoryButton.setOnAction(e -> deleteCategory());
 
         tableView = new TableView<>();
@@ -90,6 +93,7 @@ public class Category extends Application {
 
             categoryField.clear();
             getCategories();
+           
 
         } catch (SQLException ex) {
             showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to add category", ex.getMessage());

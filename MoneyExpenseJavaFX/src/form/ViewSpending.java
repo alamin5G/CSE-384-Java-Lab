@@ -38,27 +38,28 @@ public class ViewSpending extends Application {
         categoryComboBox.setPromptText("Select Category");
 
         Button searchButton = new Button("Search");
+           searchButton.setStyle("-fx-font-weight: bold; -fx-text-fill:#ffffff; -fx-background-color: orange");
         searchButton.setOnAction(e -> performSearch());
 
         tableView = new TableView<>();
         setupTableView();
 
         // Layouts
-        VBox dateRangeBox = new VBox(10, 
+        HBox dateRangeBox = new HBox(10, 
                 new HBox(10, new Label("From:"), fromDatePicker),
-                new HBox(10, new Label("To:"), toDatePicker)
+                new HBox(10, new Label("To  :"), toDatePicker),
+                new HBox(10, new Label("Category:"), categoryComboBox), 
+                searchButton
         );
 
-        VBox categoryBox = new VBox(10, new HBox(10, new Label("Category:"), categoryComboBox));
 
-        HBox controlsBox = new HBox(20, dateRangeBox, categoryBox, searchButton);
-        controlsBox.setAlignment(Pos.CENTER);
-        controlsBox.setPadding(new Insets(20));
+        dateRangeBox.setAlignment(Pos.CENTER);
+        dateRangeBox.setPadding(new Insets(20));
 
         VBox totalBox = new VBox(10, totalLabel);
         totalBox.setAlignment(Pos.CENTER);
 
-        VBox root = new VBox(20, controlsBox, tableView, totalBox);
+        VBox root = new VBox(20, dateRangeBox, tableView, totalBox);
         root.setPadding(new Insets(20));
 
         // Scene setup

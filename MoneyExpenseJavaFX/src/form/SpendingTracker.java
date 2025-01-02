@@ -43,22 +43,26 @@ public class SpendingTracker extends Application {
         totalLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #2E8B57;");
 
         Button addCategoryButton = new Button("Add New Category");
+        addCategoryButton.setStyle("-fx-font-weight: bold; -fx-text-fill:#ffffff; -fx-background-color: green ");
         addCategoryButton.setOnAction(e -> openCategory());
 
         Button viewSpendingButton = new Button("View All Expenses");
+         viewSpendingButton.setStyle("-fx-font-weight: bold; -fx-text-fill:#ffffff; -fx-background-color: orange ");
         viewSpendingButton.setOnAction(e -> openViewSpending());
 
         Button addExpenseButton = new Button("Submit");
+        addExpenseButton.setStyle("-fx-font-weight: bold; -fx-text-fill:#ffffff; -fx-background-color: green ");
         addExpenseButton.setOnAction(e -> addExpense());
 
-        Button deleteExpenseButton = new Button("Delete");
+        Button deleteExpenseButton = new Button("Delete Selected Expense");
+        deleteExpenseButton.setStyle("-fx-font-weight: bold; -fx-text-fill:#ffffff; -fx-background-color: red ");
         deleteExpenseButton.setOnAction(e -> deleteExpense());
 
         tableView = new TableView<>();
         setupTableView();
 
-        // Layouts
-        HBox inputBox = new HBox(10, new Label("Date:"), datePicker, new Label("Amount:"), amountField,
+        // Layouts where we design our interface
+        HBox inputBox = new HBox(10, new Label("Select Date:"), datePicker, new Label("Amount:"), amountField,
                 new Label("Category:"), categoryComboBox, addExpenseButton);
         inputBox.setPadding(new Insets(10));
 
@@ -80,7 +84,8 @@ public class SpendingTracker extends Application {
     }
 
     private void setupTableView() {
-        TableColumn<SpendingEntry, Integer> idColumn = new TableColumn<>("ID");
+        TableColumn<SpendingEntry, Integer> idColumn = new TableColumn<>("Sl");
+        
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
 
         TableColumn<SpendingEntry, String> dateColumn = new TableColumn<>("Date");
@@ -96,7 +101,7 @@ public class SpendingTracker extends Application {
         tableView.setItems(spendingData);
     }
 
-    private void loadCategories() {
+    public void loadCategories() {
         try {
             ResultSet rs = DatabaseConnection.statement.executeQuery("SELECT * FROM category_info");
             categoryComboBox.getItems().clear();
@@ -112,7 +117,7 @@ public class SpendingTracker extends Application {
         try {
             spendingData.clear();
             LocalDate currentDate = LocalDate.now();
-            LocalDate pastDate = currentDate.minusDays(31);
+            LocalDate pastDate = currentDate.minusDays(31); //31 days before
 
             ResultSet rs = DatabaseConnection.statement.executeQuery(
                     "SELECT * FROM spendings WHERE sdate <= '" + currentDate + "' AND sdate >= '" + pastDate + "'");
@@ -141,7 +146,7 @@ public class SpendingTracker extends Application {
         String category = categoryComboBox.getValue();
 
         if (date == null || amountText.isEmpty() || category == null || category.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Input Error", "Please fill in all fields", null);
+            showAlert(Alert.AlertType.WARNING, "Input Error", "Please fill up all fields", null);
             return;
         }
 
