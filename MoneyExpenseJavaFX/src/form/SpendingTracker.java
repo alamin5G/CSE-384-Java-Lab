@@ -62,8 +62,10 @@ public class SpendingTracker extends Application {
         setupTableView();
 
         // Layouts where we design our interface
+        Button refreshButton = new Button("Refresh");
+        refreshButton.setOnAction(e -> loadCategories());
         HBox inputBox = new HBox(10, new Label("Select Date:"), datePicker, new Label("Amount:"), amountField,
-                new Label("Category:"), categoryComboBox, addExpenseButton);
+                new Label("Category:"), categoryComboBox, addExpenseButton, refreshButton);
         inputBox.setPadding(new Insets(10));
 
         HBox actionBox = new HBox(10, addCategoryButton, viewSpendingButton, deleteExpenseButton, totalLabel);
@@ -73,7 +75,7 @@ public class SpendingTracker extends Application {
         root.setPadding(new Insets(20));
 
         // Scene and Stage setup
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 900, 800);
         stage.setScene(scene);
         stage.setTitle("MoneyExpense - Spending Tracker");
         stage.show();
