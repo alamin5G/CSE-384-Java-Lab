@@ -52,7 +52,10 @@ public class SpendingTracker extends Application {
 
         Button addExpenseButton = new Button("Submit");
         addExpenseButton.setStyle("-fx-font-weight: bold; -fx-text-fill:#ffffff; -fx-background-color: green ");
-        addExpenseButton.setOnAction(e -> addExpense());
+        addExpenseButton.setOnAction(e -> {
+            addExpense();
+            getEntries();
+                });
 
         Button deleteExpenseButton = new Button("Delete Selected Expense");
         deleteExpenseButton.setStyle("-fx-font-weight: bold; -fx-text-fill:#ffffff; -fx-background-color: red ");
@@ -64,6 +67,8 @@ public class SpendingTracker extends Application {
         // Layouts where we design our interface
         Button refreshButton = new Button("Refresh");
         refreshButton.setOnAction(e -> loadCategories());
+        
+        //layout
         HBox inputBox = new HBox(10, new Label("Select Date:"), datePicker, new Label("Amount:"), amountField,
                 new Label("Category:"), categoryComboBox, addExpenseButton, refreshButton);
         inputBox.setPadding(new Insets(10));
@@ -71,11 +76,12 @@ public class SpendingTracker extends Application {
         HBox actionBox = new HBox(10, addCategoryButton, viewSpendingButton, deleteExpenseButton, totalLabel);
         actionBox.setPadding(new Insets(10));
 
+        //final layout
         VBox root = new VBox(10, inputBox, actionBox, tableView);
         root.setPadding(new Insets(20));
 
         // Scene and Stage setup
-        Scene scene = new Scene(root, 900, 800);
+        Scene scene = new Scene(root, 900, 450);
         stage.setScene(scene);
         stage.setTitle("MoneyExpense - Spending Tracker");
         stage.show();
