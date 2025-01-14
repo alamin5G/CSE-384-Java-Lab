@@ -1,0 +1,1 @@
+Please, import the database in any MySQL supported platform such as phpMyAdmin(XAMPP, WAMP) or in MySQL Workbench using the Server menu. 
